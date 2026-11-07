@@ -45,3 +45,6 @@ Thumbs.db
 # --- JVM crash logs ---
 hs_err_pid*
 replay_pid*
+
+# --- Local code intelligence index ---
+.codegraph/
