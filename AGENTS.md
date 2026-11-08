@@ -46,6 +46,14 @@ Skeleton 是 Java 17 + Spring Boot 的 Maven 多模块单体应用，Vue 前端�
 - 当前工作环境为 Windows。真实 SDK 原生库面向 Linux x86_64/aarch64；本地可使用 skeleton Mock 模式开发，真实接入需匹配 Linux 环境及 CPU 架构。
 - README 与代码或配置有出入时，以当前源码和配置核实实际行为。
 
+## DJI AI Plugin / Skills
+
+- DJI 官方 `cloudapi2-*` Skills 已安装为本机 Codex 用户级技能；换电脑时需重新安装，项目中的 `AGENTS.md` 随 Git 同步不会同步用户技能目录。可在另一台电脑运行官方命令 `npx skills add https://github.com/dji-sdk/Cloud-API-2` 并选择 Codex。
+- 处理 DJI SDK、前端组件、设备管理、遥测、地图、负载、AI、部署或排障任务时，按需加载对应 Skill；源码在 `devkit/skills/`，共享规则与路由在 `devkit/skills/_shared/`。
+- DJI Skill 文档中以 `skills/`、`knowledge/`、`skeleton/`、`mcp/` 开头的项目路径以 `devkit/` 为基准；Skill 自身的 `references/`、`prompts/`、`commands/` 等路径相对该 Skill 目录。
+- Skill 示例需结合本项目当前 SDK `3.3.7` 的真实接口验证；安装 AI Plugin 不改变已确认的 SDK 版本和 Windows Mock 开发方式。
+- 设备操作用的 DJI MCP 服务接入需另行配置平台地址与凭证；安装 Skills 仅提供开发知识与操作指引。
+
 <!-- CODEGRAPH_START -->
 ## CodeGraph
 
