@@ -4,6 +4,9 @@
 
 - 本仓库为 DJI 上云 API 2，用户将与助手持续进行二次开发；默认使用中文沟通。
 - 二次开发主工程为 `devkit/skeleton/`，后续未特别指定的业务开发以此为起点。
+- 本项目定位为独立的机场设备控制服务，主要封装 DJI 机场与飞机控制能力，通过 RESTful API 向外提供航线任务下发、远程管控等能力。
+- 真实业务平台独立于本项目，通过接口调用本服务；业务流程、工单、客户与报表等行业业务归外部业务平台负责。
+- 后续开发优先围绕设备控制接口、SDK 适配、任务执行状态与结果展开；现有 skeleton 前端及用户、AI 对话等配套模块按需评估复用，不默认扩展为完整业务平台。
 - SDK 暂时保持 `3.3.7`，Windows 本地使用 Mock 模式；待部署 Linux 服务器时再评估升级至 `3.4.0`，届时需验证接口兼容性。
 - `devkit/fov-demo/` 是独立的培训示例，用于参考直播、OSD 遥测、SEI 视锥、Cesium 地图和手动操控实现。
 - `devkit/fov-demo/backend/fhsdk-demo-server/` 是 FOV Demo 后端；定位主业务后端时应使用 skeleton 的启动模块。
@@ -22,7 +25,7 @@ Skeleton 是 Java 17 + Spring Boot 的 Maven 多模块单体应用，Vue 前端�
 | --- | --- |
 | `pom.xml` | 聚合模块和共享构建配置 |
 | `app/fh-skeleton-app/` | Spring Boot 启动入口、应用配置、模块依赖组装 |
-| `feature/` | 业务功能；Controller、Service、DTO、实体与数据存取等按业务组织 |
+| `feature/` | 本服务的设备能力接口与处理逻辑；Controller、Service、DTO、任务记录等按能力组织 |
 | `kernel/kernel-spi/` | 公共接口、事件、查询等契约 |
 | `kernel/kernel-impl/` | 事件总线等公共基础实现 |
 | `kernel/kernel-mock-sdk/` | 模拟设备、遥测和事件，供本地开发与测试使用 |
@@ -43,6 +46,7 @@ Skeleton 是 Java 17 + Spring Boot 的 Maven 多模块单体应用，Vue 前端�
 - `devkit/libs/` 提供按 CPU 架构分发的预编译 SDK JAR；`devkit/skills/`、`devkit/knowledge/` 提供开发辅助资料。
 - 根目录 `docs/` 提供平台部署、设备接入、鉴权和 SDK 等文档；skeleton 的 `docs/` 提供骨架工程说明。
 - 自定义业务后端通过 SDK 接入上云 API 2 平台底座；底座有独立部署流程。
+- 当前项目的调用关系为：外部业务平台 → 本项目 REST API → DJI SDK → 官方设备管控底座 → 机场/飞机。Mock 用于验证接口与模拟设备事件，真实管控需接入可用的官方底座。
 - 当前工作环境为 Windows。真实 SDK 原生库面向 Linux x86_64/aarch64；本地可使用 skeleton Mock 模式开发，真实接入需匹配 Linux 环境及 CPU 架构。
 - README 与代码或配置有出入时，以当前源码和配置核实实际行为。
 
